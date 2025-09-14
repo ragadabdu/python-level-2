@@ -1,1 +1,1 @@
-{"expenses": [{"item": "rent", "category": "bills", "amount": 2000}, {"item": "burger", "category": "food", "amount": 300}, {"item": "books", "category": "school", "amount": 200}], "category_menu": ["bills", "food", "school"]}
+{"expenses": [{"item": "bill", "category": "bills", "amount": 3333, "date": "2025-09-14T18:04:09.646012"}], "category_menu": ["bills", "food", "school"]}
