@@ -1,0 +1,1 @@
+{"expenses": [{"item": "rent", "category": "bills", "amount": 2000}, {"item": "burger", "category": "food", "amount": 300}, {"item": "books", "category": "school", "amount": 200}], "category_menu": ["bills", "food", "school"]}

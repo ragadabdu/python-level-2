@@ -30,9 +30,62 @@ while True:
             print("This category doesn't exist. You can create it by choosing 'editing category'.")
     
     elif action == "view":
-        for i, expense in enumerate(expenses, start = 1):
-            print(f'{i}. item: {expenses[i-1]["item"]} - category: {expenses[i-1]["category"]} - amount: {expenses[i-1]["amount"]}')
-    
+        view_options = input("Do you want to: Sort?Filter?View?: ").lower()
+        if view_options == "view":
+            for i, expense in enumerate(expenses, start = 1):
+                print(f'{i}. item: {expenses[i-1]["item"]} - category: {expenses[i-1]["category"]} - amount: {expenses[i-1]["amount"]}')
+        elif view_options == "sort":
+            sort_option = input("Sort by: Category?Item?Amount?: ").lower()
+            if sort_option == "category":
+                order = input("From: A-Z? Z-A?: ").lower()
+                if order == "a-z":
+                    sorted_list = sorted(expenses, key = lambda x: x["category"])
+                    for i, expense in enumerate(sorted_list, start = 1):
+                        print(f'{i}. item: {sorted_list[i-1]["item"]} - category: {sorted_list[i-1]["category"]} - amount: {sorted_list[i-1]["amount"]}')
+                else: 
+                    sorted_list = sorted(expenses, key = lambda x: x["category"], reverse= True)
+                    for i, expense in enumerate(sorted_list, start = 1):
+                        print(f'{i}. item: {sorted_list[i-1]["item"]} - category: {sorted_list[i-1]["category"]} - amount: {sorted_list[i-1]["amount"]}')
+
+            elif sort_option == "item":
+                order = input("From: A-Z? Z-A?: ").lower()
+                if order == "a-z":
+                    sorted_list = sorted(expenses, key = lambda x: x["item"])
+                    for i, expense in enumerate(sorted_list, start = 1):
+                        print(f'{i}. item: {sorted_list[i-1]["item"]} - category: {sorted_list[i-1]["category"]} - amount: {sorted_list[i-1]["amount"]}')
+                else: 
+                    sorted_list = sorted(expenses, key = lambda x: x["item"], reverse=True)
+                    for i, expense in enumerate(sorted_list, start = 1):
+                        print(f'{i}. item: {sorted_list[i-1]["item"]} - category: {sorted_list[i-1]["category"]} - amount: {sorted_list[i-1]["amount"]}')
+
+            elif sort_option == "amount":
+                order = input("Order: Ascending? Descending?: ").lower()
+                if order == "ascending":
+                    sorted_list = sorted(expenses, key = lambda x: x["amount"])
+                    for i, expense in enumerate(sorted_list, start = 1):
+                        print(f'{i}. item: {sorted_list[i-1]["item"]} - category: {sorted_list[i-1]["category"]} - amount: {sorted_list[i-1]["amount"]}')
+                else: 
+                    sorted_list = sorted(expenses, key = lambda x: x["amount"], reverse=True)
+                    for i, expense in enumerate(sorted_list, start = 1):
+                        print(f'{i}. item: {sorted_list[i-1]["item"]} - category: {sorted_list[i-1]["category"]} - amount: {sorted_list[i-1]["amount"]}')
+        elif view_options == "filter":
+            filter_option = input("Filter by: Category? Item? Amount? ").lower()
+            if filter_option == "category":
+                filter_by = input(f"pick category to filter: {category_menu}? ")
+                filtered_list = [expense for expense in expenses if expense["category"] == filter_by]
+                for i, expense in enumerate(filtered_list, start = 1):
+                    print(f'{i}. item: {filtered_list[i-1]["item"]} - category: {filtered_list[i-1]["category"]} - amount: {filtered_list[i-1]["amount"]}')
+            elif filter_option == "item":
+                filter_by = input("Filter by item name: ")
+                filtered_list = [expense for expense in expenses if expense["item"] == filter_by]
+                for i, expense in enumerate(filtered_list, start = 1):
+                    print(f'{i}. item: {filtered_list[i-1]["item"]} - category: {filtered_list[i-1]["category"]} - amount: {filtered_list[i-1]["amount"]}')
+            if filter_option == "amount":
+                min_amount = int(input("Enter minimum amount: "))
+                max_amount = int(input("Enter maximum amount: "))
+                filtered_list = [expense for expense in expenses if min_amount <= expense["amount"] <= max_amount]
+                for i, expense in enumerate(filtered_list, start = 1):
+                    print(f'{i}. item: {filtered_list[i-1]["item"]} - category: {filtered_list[i-1]["category"]} - amount: {filtered_list[i-1]["amount"]}')
     elif action == "edit expense":
         index = input("Enter index of expense: ")
         if index =="back":
@@ -78,7 +131,14 @@ while True:
                 print(cate)
             index = input("Enter index number for the category: ")
             if index.isdigit() and int(index) <= len(category_menu) and int(index) > 0:
-                category_menu.pop(int(index)-1)
+                category_to_delete = category_menu[int(index)-1]
+                if any(expense["category"] == category_to_delete for expense in expenses):
+                    confirm = input("You have expenses in this category are you sure you want to delete(y/n):").lower()
+                    if confirm == "y":
+                        category_menu.pop(int(index)-1)
+                else:
+                    category_menu.pop(int(index)-1)
+            save_data()
         elif editing_option == "summary":
             for cate in category_menu:
                 total_amount = 0
