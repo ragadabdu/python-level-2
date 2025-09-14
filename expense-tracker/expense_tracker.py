@@ -1,8 +1,18 @@
 #
+import json
 
-expenses = []
+try:
+    with open("data.json", "r") as f:
+        data = json.load(f)
+        expenses = data.get("expenses", [])
+        category_menu = data.get("category_menu", ["bills", "food", "school"])
+except FileNotFoundError:
+    expenses = []
+    category_menu = ["bills", "food", "school"]
 
-category_menu = ["bills", "food", "school"]
+def save_data():
+    with open("data.json", "w") as f:
+        json.dump({"expenses": expenses ,"category_menu": category_menu}, f)
 
 while True:
     action = input("Choose option:Add?View?Delete?Edit Expense?Edit Category?Exit? ").lower().strip()
@@ -14,7 +24,8 @@ while True:
         print(category_menu)
         category = input("choose a category: ").lower().strip()
         if category in category_menu:
-            expenses.append({"item": input("enter item: "), "category": category, "amount": input("enter amount: ")})
+            expenses.append({"item": input("enter item: "), "category": category, "amount": int(input("enter amount: "))})
+            save_data()
         else:
             print("This category doesn't exist. You can create it by choosing 'editing category'.")
     
@@ -24,31 +35,36 @@ while True:
     
     elif action == "edit expense":
         index = input("Enter index of expense: ")
-        editing_expense = input("do you want to edit: category?item?amount?exit?").lower().strip()
-        if editing_expense =="exit":
-            continue
-        if index.isdigit() and int(index) <= len(expenses):
+        if index =="back":
+                continue
+        if index.isdigit() and int(index) <= len(expenses) and int(index) > 0:
+            editing_expense = input("do you want to edit: category?item?amount?back?").lower().strip()
+            if editing_expense =="back":
+                continue
             if editing_expense == "category":
                 diff_category = input("enter a different category: ")
                 if diff_category in category_menu:
                     expenses[int(index)-1]["category"] = diff_category
+                    save_data()
                 else:
                     print("This category doesn't exist. You can create it by choosing 'editing category'.")
             elif editing_expense == "item":
                 expenses[int(index)-1]["item"]=input("enter a different item: ")
+                save_data()
             elif editing_expense == "amount":
                 diff_amount = input("enter a different amount:")
                 if diff_amount.isdigit():
-                    expenses[int(index)-1]["amount"] = diff_amount
+                    expenses[int(index)-1]["amount"] = int(diff_amount)
+                    save_data()
                 else:
                     print("Invalid amount")
         else:
             print("Invalid index number.")
 
     elif action == "edit category":
-        editing_option = input("choose action:Add?Delete?Summary? ").lower().strip()
+        editing_option = input("choose action:Add?Delete?Summary?back? ").lower().strip()
 
-        if editing_option =="exit":
+        if editing_option =="back":
             continue
         if editing_option == "add":
             new_category = input("enter new category: ")
@@ -56,18 +72,26 @@ while True:
                 print("Category already exists.")
             else:
                 category_menu.append(new_category)
+                save_data()
+        elif editing_option == "delete":
+            for n, cate in enumerate(category_menu, start = 1):
+                print(cate)
+            index = input("Enter index number for the category: ")
+            if index.isdigit() and int(index) <= len(category_menu) and int(index) > 0:
+                category_menu.pop(int(index)-1)
         elif editing_option == "summary":
             for cate in category_menu:
                 total_amount = 0
                 for expense in expenses:
                     if cate == expense["category"]:
-                        total_amount += int(expense["amount"])
+                        total_amount += expense["amount"]
                 print(f'Total amount: {total_amount} in {cate}')
 
     elif action == "delete":
         index = input("enter index of expense to delete: ")
-        if index.isdigit() and int(index) <= len(expenses):
+        if index.isdigit() and int(index) <= len(expenses) and int(index) > 0:
             expenses.pop(int(index)-1)
+            save_data()
 
 
 
