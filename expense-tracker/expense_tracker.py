@@ -1,6 +1,9 @@
 #
 import json
 from datetime import datetime
+import matplotlib.pyplot as plt
+import numpy as np
+from collections import defaultdict
 
 try:
     with open("data.json", "r") as f:
@@ -16,7 +19,7 @@ def save_data():
         json.dump({"expenses": expenses ,"category_menu": category_menu}, f)
 
 while True:
-    action = input("Choose option:Add?View?Delete?Edit Expense?Edit Category?Exit? ").lower().strip()
+    action = input("Choose option:Add?View?Delete?Edit Expense?Edit Category?Show graph?Exit? ").lower().strip()
 
     if action == "exit":
         break
@@ -156,6 +159,21 @@ while True:
                     if cate == expense["category"]:
                         total_amount += expense["amount"]
                 print(f'Total amount: {total_amount} in {cate}')
+
+
+    elif action == "show graph":
+        category_totals = defaultdict(int)
+        for expense in expenses:
+            category_totals[expense["category"]] += expense["amount"]
+        
+        labels = list(category_totals.keys())
+        y = list(category_totals.values())
+
+        plt.pie(y, labels = labels)
+        print(category_totals)
+
+        plt.title("Expenses by Category")
+        plt.show()
 
     elif action == "delete":
         index = input("enter index of expense to delete: ")
