@@ -1,5 +1,4 @@
 import random, re
-from datetime import datetime
 
 responses = {
     "farewell": ["Goodbye!", "See you later!", "Take care!"],
@@ -54,7 +53,7 @@ while True:
             total += int(expense["amount"])
 
         print(f"Bot: Income: {income} | Expenses: {total} | Balance: {balance}")
-
+        
     else:
         print(random.choice(responses["fallback"]))
 
