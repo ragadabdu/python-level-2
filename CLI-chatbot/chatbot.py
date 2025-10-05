@@ -1,4 +1,5 @@
 import random, re
+from datetime import datetime
 
 responses = {
     "farewell": ["Goodbye!", "See you later!", "Take care!"],
@@ -14,13 +15,13 @@ balance = 0
 
 while True:
     user = input("what can i help you with: ").lower().strip()
-    #words = user.split()
     match = re.search(r"(spent|paid)\s+(\d+)\s+(on|for)\s+(\w+)", user, re.I)
+
     if match:
         action = match.group(1).lower()
         amount = int(match.group(2))
         category = match.group(4).lower()
-        expenses.append({"category": category , "amount": amount})
+        expenses.append({"category": category , "amount": amount, "date": datetime.now().strftime("%B, %d")})
         balance -= amount
         print(action,amount,category)
         print(f'Bot: You spent {amount} on {category}, got it!')
@@ -53,7 +54,17 @@ while True:
             total += int(expense["amount"])
 
         print(f"Bot: Income: {income} | Expenses: {total} | Balance: {balance}")
-        
+
+    elif re.search(r"\b(january|february|march|april|may|june|july|august|september|october|november|december)\b\s+(\d+)", user, re.I):
+        print("month was found")
+        match = re.search(r"\b(january|february|march|april|may|june|july|august|september|october|november|december)\b\s+(\d+)", user, re.I)
+        month = match.group(1)
+        day = match.group(2)  
+        for expense in expenses:
+            if expense["date"].lower() == (month, day):
+                print("true")
+            print(expense["date"].lower())
+        print(month , day) 
     else:
         print(random.choice(responses["fallback"]))
 
