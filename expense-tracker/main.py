@@ -11,25 +11,25 @@ while True:
 
     elif action == "add":
         add_expense(expenses, category_menu )
-        save_data()
+        save_data(expenses, category_menu)
     
     elif action == "view":
         view_expenses(expenses, category_menu )
 
     elif action == "edit expense":
         edit_expenses(expenses, category_menu )
-        save_data()
+        save_data(expenses, category_menu)
 
     elif action == "edit category":
         edit_category(expenses, category_menu )
-        save_data()
+        save_data(expenses, category_menu)
 
     elif action == "show graph":
         plot_graph(expenses)
 
     elif action == "delete":
         delete_expense(expenses)
-        save_data()
+        save_data(expenses, category_menu)
 
 
 

@@ -18,7 +18,7 @@ def add_expense(expenses,category_menu):
     category = input("choose a category: ").lower().strip()
     if category in category_menu:
         expenses.append({"item": input("enter item: "), "category": category, "amount": int(input("enter amount: ")), "date": datetime.now().isoformat()})
-        save_data()
+        save_data(expenses, category_menu)
     else:
         print("This category doesn't exist. You can create it by choosing 'editing category'.")
 

@@ -1,0 +1,87 @@
+# Python Level 2 Projects
+
+This repository contains a collection of intermediate Python projects focused on practicing data handling, automation, and simple data analysis. These projects helped reinforce core Python concepts such as working with files, data visualization, and text processing.
+
+## Projects
+
+### Expense Tracker
+
+A command-line application for tracking personal expenses.
+
+Features:
+
+* Add, view, delete, and edit expenses
+* Create and manage expense categories
+* Filter and sort expenses by item, category, or amount
+* Visualize spending using a pie chart with Matplotlib
+* Store data using JSON files
+
+Technologies used:
+
+* Python
+* JSON
+* Matplotlib
+* Collections (defaultdict)
+* Datetime
+
+---
+
+### CLI Finance Chatbot
+
+A simple chatbot that tracks expenses and income through natural language input.
+
+Examples of supported commands:
+
+* "I spent 20 on food"
+* "I got 200"
+* "show expenses by category"
+* "summary"
+* "balance"
+
+Features:
+
+* Tracks expenses and income
+* Calculates current balance
+* Shows spending summary by category
+* Uses regex pattern matching to understand user input
+
+Technologies used:
+
+* Python
+* Regular Expressions (re)
+* Datetime
+* Random module
+
+---
+
+### Job Listings Web Scraper
+
+A Python script that scrapes remote full-stack developer job listings from We Work Remotely.
+
+Features:
+
+* Scrapes job title, company name, salary, job type, location, and posting date
+* Saves results into a CSV file
+* Demonstrates HTML parsing and data extraction
+
+Technologies used:
+
+* Python
+* Requests
+* BeautifulSoup (bs4)
+* CSV
+
+---
+
+## Skills Practiced
+
+* File handling and JSON storage
+* Data visualization
+* Web scraping
+* Regex-based text processing
+* Command-line application design
+* Working with external libraries
+
+## Purpose
+
+These projects were created as part of my learning process while improving my Python programming skills and exploring practical applications of Python in automation, data processing, and simple data analysis.
